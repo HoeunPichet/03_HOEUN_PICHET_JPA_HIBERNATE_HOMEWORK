@@ -8,12 +8,8 @@ import com.kshrd.jpa_hibernate_homework.model.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -68,6 +64,20 @@ public class ProductRepository {
                 .build();
 
         em.persist(product);
+
+        return product;
+    }
+
+    public Product updateProduct(Long id, ProductRequest request) {
+        Product product = em.find(Product.class, id);
+        if(!em.contains(product)) throw new AppNotFoundException("Product ID " + id + " not found");
+        em.detach(product);
+
+        product.setName(request.getName());
+        product.setPrice(request.getPrice());
+        product.setQuantity(request.getQuantity());
+
+        em.merge(product);
 
         return product;
     }

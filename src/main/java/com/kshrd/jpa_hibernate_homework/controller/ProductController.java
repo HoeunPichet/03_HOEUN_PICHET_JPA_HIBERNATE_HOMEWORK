@@ -84,8 +84,16 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update product by id")
-    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductRequest request) {
-        return null;
+    public ResponseEntity<ApiResponse<Product>> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductRequest request) {
+        Product product = productService.updateProduct(id, request);
+        ApiResponse<Product> response = ApiResponse.<Product>builder()
+                .success(true)
+                .message("Product with ID " + id + " updated successfully!")
+                .status(HttpStatus.OK)
+                .payload(product)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

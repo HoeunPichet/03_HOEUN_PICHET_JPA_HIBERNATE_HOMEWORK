@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Long id, ProductRequest request) {
-        return null;
+        return productRepository.updateProduct(id, request);
     }
 
     @Override
