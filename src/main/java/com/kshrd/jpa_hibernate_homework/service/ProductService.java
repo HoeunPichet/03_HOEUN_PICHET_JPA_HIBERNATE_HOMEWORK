@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    PaginatedResponse<List<Product>> getAllProducts(Long page, Long size);
+    PaginatedResponse<List<Product>> getAllProducts(@Valid Integer page, @Valid Integer size);
 
     Product getProductById(Long id);
 

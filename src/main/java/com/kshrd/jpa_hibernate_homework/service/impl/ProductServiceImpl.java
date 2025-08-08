@@ -7,8 +7,6 @@ import com.kshrd.jpa_hibernate_homework.repository.ProductRepository;
 import com.kshrd.jpa_hibernate_homework.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public PaginatedResponse<List<Product>> getAllProducts(Long page, Long size) {
+    public PaginatedResponse<List<Product>> getAllProducts(Integer page, Integer size) {
         return productRepository.getAllProducts(page, size);
     }
 
@@ -49,6 +47,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-
+        productRepository.deleteProduct(id);
     }
 }

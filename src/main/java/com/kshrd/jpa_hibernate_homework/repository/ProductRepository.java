@@ -20,17 +20,17 @@ public class ProductRepository {
     @PersistenceContext
     private final EntityManager em;
 
-    public PaginatedResponse<List<Product>> getAllProducts(Long page, Long size) {
+    public PaginatedResponse<List<Product>> getAllProducts(Integer page, Integer size) {
         int pageNumber = page != null && page > 0 ? Math.toIntExact(page - 1) : 0;
         int pageSize = size != null && size > 0 ? Math.toIntExact(size) : 10;
 
         // Count total records
-        Long totalElements = em.createQuery("SELECT COUNT(p) FROM Product p", Long.class)
+        Integer totalElements = em.createQuery("SELECT COUNT(p) FROM Product p", Integer.class)
             .getSingleResult();
 
         // Calculate total pages
-        Long totalPages = (totalElements + pageSize - 1) / pageSize;
-        Long currentPage = ((long) pageNumber) + 1;
+        Integer totalPages = (totalElements + pageSize - 1) / pageSize;
+        Integer currentPage = pageNumber + 1;
 
         // Fetch paginated data
         List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class)
@@ -42,7 +42,7 @@ public class ProductRepository {
         Pagination pagination = new Pagination(
             totalElements,
             currentPage,
-            (long) pageSize,
+            pageSize,
             totalPages
         );
 
@@ -80,5 +80,12 @@ public class ProductRepository {
         em.merge(product);
 
         return product;
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = em.find(Product.class, id);
+        if(!em.contains(product)) throw new AppNotFoundException("Product ID " + id + " not found");
+
+        em.remove(product);
     }
 }
