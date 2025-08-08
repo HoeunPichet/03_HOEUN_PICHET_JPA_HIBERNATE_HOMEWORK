@@ -88,8 +88,16 @@ public class ProductController {
         summary = "Get low stock products",
         description = "Returns a list of products with quantity less than the specified threshold."
     )
-    public ResponseEntity<String> getProductByQuantity(@RequestParam Integer quantity) {
-        return null;
+    public ResponseEntity<ApiResponse<List<Product>>> getProductByQuantity(@RequestParam Integer quantity) {
+        List<Product> product = productService.getProductByQuantity(quantity);
+        ApiResponse<List<Product>> response = ApiResponse.<List<Product>>builder()
+                .success(true)
+                .message("Products with quantity less than " + quantity + " fetched successfully")
+                .status(HttpStatus.OK)
+                .payload(product)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

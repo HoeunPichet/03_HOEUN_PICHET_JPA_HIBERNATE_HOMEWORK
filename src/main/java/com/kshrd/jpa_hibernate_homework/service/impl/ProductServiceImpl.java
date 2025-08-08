@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductByQuantity(Integer quantity) {
-        return null;
+        return productRepository.getProductByQuantity(quantity);
     }
 
     @Override

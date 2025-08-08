@@ -65,6 +65,14 @@ public class ProductRepository {
         return product;
     }
 
+    public List<Product> getProductByQuantity(Integer quantity) {
+        List<Product> product = em.createQuery("SELECT p FROM Product p WHERE p.quantity < :quantity", Product.class)
+                .setParameter("quantity", quantity)
+                .getResultList();
+
+        return product;
+    }
+
     public Product createProduct(ProductRequest request) {
         Product product = Product.builder()
                 .name(request.getName())
