@@ -21,29 +21,25 @@ public class ProductRepository {
     private final EntityManager em;
 
     public PaginatedResponse<List<Product>> getAllProducts(Integer page, Integer size) {
-        int pageNumber = page != null && page > 0 ? Math.toIntExact(page - 1) : 0;
-        int pageSize = size != null && size > 0 ? Math.toIntExact(size) : 10;
+        int pageNumber = page != null && page > 0 ? page - 1 : 0;
+        int pageSizeValue = size != null && size > 0 ? size : 10;
 
-        // Count total records
-        Integer totalElements = em.createQuery("SELECT COUNT(p) FROM Product p", Integer.class)
-            .getSingleResult();
+        Long totalElements = em.createQuery("SELECT COUNT(p) FROM Product p", Long.class)
+                .getSingleResult();
 
-        // Calculate total pages
-        Integer totalPages = (totalElements + pageSize - 1) / pageSize;
-        Integer currentPage = pageNumber + 1;
+        Long totalPages = (totalElements + pageSizeValue - 1) / pageSizeValue;
+        Long currentPage = (long) (pageNumber + 1);
 
-        // Fetch paginated data
         List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class)
-            .setFirstResult(pageNumber * pageSize)
-            .setMaxResults(pageSize)
-            .getResultList();
+                .setFirstResult(pageNumber * pageSizeValue)
+                .setMaxResults(pageSizeValue)
+                .getResultList();
 
-        // Build pagination info
         Pagination pagination = new Pagination(
-            totalElements,
-            currentPage,
-            pageSize,
-            totalPages
+                totalElements,
+                currentPage,
+                (long) pageSizeValue,
+                totalPages
         );
 
         return new PaginatedResponse<>(products, pagination);

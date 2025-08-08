@@ -9,8 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pagination {
-    private Integer totalElements;
-    private Integer currentPage;
-    private Integer pageSize;
-    private Integer totalPages;
+    private Long totalElements;
+    private Long currentPage;
+    private Long pageSize;
+    private Long totalPages;
 }
