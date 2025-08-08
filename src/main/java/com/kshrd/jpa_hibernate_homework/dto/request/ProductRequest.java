@@ -24,14 +24,14 @@ public class ProductRequest {
 
     @Schema(example = "0.00")
     @NotNull(message = "Price is required")
-    @DecimalMin(value = "0.00", message = "Price must be at least 0.00")
-    @DecimalMax(value = "9999999999.99", message = "Price must not exceed 9999999999.99")
-    @Digits(integer = 10, fraction = 2, message = "Price must have at most 10 digits before the decimal point and 2 after")
+    @DecimalMin(value = "0.01", message = "Price must be greater than zero")
+    @DecimalMax(value = "99999999.99", message = "Price must not exceed 99999999.99")
+    @Digits(integer = 8, fraction = 2, message = "Price must have at most 8 digits before the decimal point and 2 after")
     private BigDecimal price;
 
     @Schema(example = "1")
     @NotNull(message = "Quantity is required")
-    @Min(value = 0, message = "Quantity must be non-negative")
+    @Min(value = 1L, message = "Quantity must be at least 1")
     @Max(value = 9999999999L, message = "Quantity must not exceed 9999999999")
-    private Long quantity;
+    private Integer quantity;
 }

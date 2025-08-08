@@ -16,7 +16,7 @@ public interface ProductService {
 
     List<Product> getProductByName(String name);
 
-    List<Product> getProductByQuantity(Long quantity);
+    List<Product> getProductByQuantity(Integer quantity);
 
     Product createProduct(@Valid ProductRequest request);
 

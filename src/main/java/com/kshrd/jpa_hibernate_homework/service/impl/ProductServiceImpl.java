@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductByQuantity(Long quantity) {
+    public List<Product> getProductByQuantity(Integer quantity) {
         return null;
     }
 

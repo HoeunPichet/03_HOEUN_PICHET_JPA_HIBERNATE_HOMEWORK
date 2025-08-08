@@ -26,7 +26,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(precision = 10)
-    private Long quantity;
+    private Integer quantity;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

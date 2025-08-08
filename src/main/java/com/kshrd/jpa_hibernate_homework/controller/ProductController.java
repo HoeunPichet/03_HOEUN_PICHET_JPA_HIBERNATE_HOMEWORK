@@ -64,7 +64,7 @@ public class ProductController {
 
     @GetMapping("/low-stock")
     @Operation(summary = "Get low stock products")
-    public ResponseEntity<String> getProductByQuantity(@RequestParam Long quantity) {
+    public ResponseEntity<String> getProductByQuantity(@RequestParam Integer quantity) {
         return null;
     }
 
