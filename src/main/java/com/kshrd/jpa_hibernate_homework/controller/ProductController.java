@@ -71,8 +71,16 @@ public class ProductController {
         summary = "Get all products by name",
         description = "Returns a list of products that contain the given name (case-insensitive partial match)."
     )
-    public ResponseEntity<String> getProductByName(@RequestParam String name) {
-        return null;
+    public ResponseEntity<ApiResponse<List<Product>>> getProductByName(@RequestParam String name) {
+        List<Product> product = productService.getProductByName(name);
+        ApiResponse<List<Product>> response = ApiResponse.<List<Product>>builder()
+                .success(true)
+                .message("Products matching name '" + name + "' fetched successfully")
+                .status(HttpStatus.OK)
+                .payload(product)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/low-stock")

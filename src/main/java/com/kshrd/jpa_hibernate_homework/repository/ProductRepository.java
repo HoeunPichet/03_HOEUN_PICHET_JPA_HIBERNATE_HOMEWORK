@@ -56,6 +56,15 @@ public class ProductRepository {
         return product;
     }
 
+    public List<Product> getProductByName(String name) {
+        String trimmedName = name.trim();
+        List<Product> product = em.createQuery("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(:name)", Product.class)
+                .setParameter("name", "%" + trimmedName + "%")
+                .getResultList();
+
+        return product;
+    }
+
     public Product createProduct(ProductRequest request) {
         Product product = Product.builder()
                 .name(request.getName())
@@ -77,9 +86,7 @@ public class ProductRepository {
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());
 
-        em.merge(product);
-
-        return product;
+        return em.merge(product);
     }
 
     public void deleteProduct(Long id) {
